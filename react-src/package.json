@@ -1,0 +1,31 @@
+{
+    "name": "meyer",
+    "version": "0.1.0",
+    "private": true,
+    "dependencies": {
+        "@devloco\/react-scripts-wptheme": "2.1.2-wptheme-2.1.5",
+        "react": "^16.7.0",
+        "react-dom": "^16.7.0"
+    },
+    "scripts": {
+        "crabuild": "react-scripts build",
+        "craeject": "react-scripts eject",
+        "crastart": "react-scripts start",
+        "cratest": "react-scripts test",
+        "build": "wptheme-scripts build",
+        "start": "wptheme-scripts start",
+        "wpbuild": "wptheme-scripts wpbuild",
+        "wpstart": "wptheme-scripts wpstart"
+    },
+    "eslintConfig": {
+        "extends": "react-app"
+    },
+    "browserslist": [
+        ">0.2%",
+        "not dead",
+        "not ie <= 11",
+        "not op_mini all"
+    ],
+    "homepage": "\/wp-content\/themes\/meyer",
+    "browserLaunchTo": "http:\/\/meyer.test"
+}

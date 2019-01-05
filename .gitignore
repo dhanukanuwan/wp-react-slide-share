@@ -1,0 +1,9 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+style.css
+asset-manifest.json
+favicon.ico
+index.php
+manifest.json
+screenshot.png
+!DO_NOT_EDIT_THESE_FILES!.txt
