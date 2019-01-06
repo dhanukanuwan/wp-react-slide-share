@@ -8,11 +8,11 @@ module.exports = function(grunt) {
     sass: {
       options: {
         implementation: sass,
-			  sourceMap: true,                     // Target options
+			  sourceMap: true,
         outputStyle: 'compressed'
-      },                             // Task
-      dist: {                            // Target
-        files: {                         // Dictionary of files
+      },
+      dist: {
+        files: {                  
           'src/css/main.min.css': 'src/sass/main.scss'
         }
       }

@@ -1,0 +1,31 @@
+body,
+html {
+  height: 100%;
+  width: 100%;
+}
+.full-height {
+  height: 100%;
+}
+#root {
+  height: 100%;
+}
+body {
+  background-color: $light_gray;
+}
+.slide-share-wrap {
+  padding-left: 0;
+  padding-right: 0;
+}
+.slide-share-left {
+  background-color: $white;
+  max-width: 290px;
+  padding: 40px 30px;
+}
+.site-logo{
+  img {
+    max-width: 170px;
+    width: 100%;
+    display: block;
+    margin: 0 auto;
+  }
+}
