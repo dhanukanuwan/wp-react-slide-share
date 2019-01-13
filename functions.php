@@ -56,6 +56,9 @@ if ( ! function_exists( 'meyer_setup' ) ) :
 			'flex-width'  => true,
 			'flex-height' => true,
 		) );
+
+		add_image_size( 'slide_thumb', 420, 280, ['right', 'top'] );
+
 	}
 endif;
 add_action( 'after_setup_theme', 'meyer_setup' );

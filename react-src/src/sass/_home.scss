@@ -20,6 +20,7 @@ body {
   background-color: $white;
   max-width: 290px;
   padding: 40px 30px;
+  overflow: hidden;
 }
 .site-logo{
   img {
@@ -27,5 +28,17 @@ body {
     width: 100%;
     display: block;
     margin: 0 auto;
+  }
+}
+.thumbs-wrap {
+  margin-top: 50px;
+  overflow: hidden;
+
+  .swiper-slide {
+    margin-bottom: 20px;
+    img {
+      max-width: 210px;
+      width: 100%;
+    }
   }
 }

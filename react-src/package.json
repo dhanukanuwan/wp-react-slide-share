@@ -4,11 +4,13 @@
     "private": true,
     "dependencies": {
         "@devloco/react-scripts-wptheme": "2.1.2-wptheme-2.1.5",
+        "axios": "^0.18.0",
         "bootstrap": "^4.2.1",
         "grunt-sass": "^3.0.2",
         "node-sass": "^4.11.0",
         "react": "^16.7.0",
-        "react-dom": "^16.7.0"
+        "react-dom": "^16.7.0",
+        "swiper": "^4.4.6"
     },
     "scripts": {
         "crabuild": "react-scripts build",
