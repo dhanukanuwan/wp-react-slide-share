@@ -21,6 +21,10 @@ body {
   max-width: 290px;
   padding: 40px 30px;
   overflow: hidden;
+
+  .thumbs-wrap {
+    max-height: 700px;
+  }
 }
 .site-logo{
   img {
@@ -35,10 +39,21 @@ body {
   overflow: hidden;
 
   .swiper-slide {
-    margin-bottom: 20px;
     img {
       max-width: 210px;
       width: 100%;
+      margin-bottom: 20px;
+      -webkit-transition: all 0.3s ease;
+      -moz-transition: all 0.3s ease;
+      -o-transition: all 0.3s ease;
+      -ms-transition: all 0.3s ease;
+      transition: all 0.3s ease;
+    }
+  }
+
+  .swiper-slide-active {
+    img {
+      opacity: 0.5;
     }
   }
 }
@@ -49,5 +64,98 @@ body {
     height: 100%;
     display: block;
     margin: 0 auto;
+  }
+}
+
+.next-slide {
+  button {
+    width: 25px;
+    height: 25px;
+    margin: 20px auto 0;
+    display: block;
+    color: $black;
+    border: 1px solid $black;
+    border-radius: 50%;
+    text-align: center;
+    background: transparent;
+    padding: 0 0 0 2px;
+    cursor: pointer;
+
+    &:focus {
+      outline: none;
+    }
+
+    i {
+      -webkit-text-stroke: 2px $white;
+    }
+  }
+}
+
+.slide-share-right {
+  padding: 20px 30px;
+  position: relative;
+}
+
+.top-nav-bar {
+  display: inline-block;
+  width: 100%;
+
+  .top-nav-bar-left {
+    float: left;
+    span {
+      font-size: 20px;
+      line-height: 20px;
+      display: inline-block;
+      margin-right: 10px;
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+
+  .top-nav-bar-right {
+    float: right;
+  }
+}
+
+.slides-info {
+  display: inline-block;
+  width: 100%;
+  padding-top: 50px;
+  text-transform: uppercase;
+
+  .slide-counts {
+    display: inline-block;
+    width: 100%;
+    margin-top: 10px;
+    border-top: 1px solid $black;
+    border-bottom: 1px solid $black;
+    padding-top: 15px;
+    padding-bottom: 15px;
+  }
+}
+
+.slides-bottom-ctrl {
+  position: absolute;
+  bottom: 40px;
+  width: 100%;
+  left: 0;
+  text-align: center;
+  text-transform: uppercase;
+
+  .bottom-ctrl-btns {
+    margin-bottom: 10px;
+  }
+
+  .next-slide {
+    width: 50px;
+    display: inline-block;
+
+    button {
+      i {
+        -webkit-text-stroke: 2px $light_gray;
+      }
+    }
   }
 }

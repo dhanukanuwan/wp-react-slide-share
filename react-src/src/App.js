@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import logo from './images/meyer-logo.png';
 import './css/main.min.css';
 import Swiper from 'swiper';
-//import $ from 'jquery';
+import $ from 'jquery';
 
 class SingleThumb extends Component {
 
@@ -47,7 +47,9 @@ class SingleThumb extends Component {
 class ImageThumbs extends Component {
 
   componentDidMount() {
+
     setTimeout(() => { window.dispatchEvent(new Event('resize')) }, 0);
+
   }
 
   handleClickedData = (passedData) => {
@@ -57,12 +59,6 @@ class ImageThumbs extends Component {
   render() {
 
     const imageList = this.props.thumbList;
-
-    const thumbSwiper = new Swiper( '.thumbs-wrap', {
-        direction: 'vertical',
-        slidesPerView: 1,
-        height: 140
-    });
 
     return (
       <div className="thumbs-wrap swiper-container">
@@ -75,6 +71,50 @@ class ImageThumbs extends Component {
 
 }
 
+class SlideNextBtn extends Component {
+
+  handleSlideNext = (e) => {
+
+    e.preventDefault();
+
+    this.props.onClickFunction(e);
+
+  }
+
+  render() {
+
+    return (
+      <div className="next-slide">
+        <button onClick={this.handleSlideNext}  ><i className="fa fa-arrow-down" aria-hidden="true"></i></button>
+      </div>
+    );
+
+  }
+
+}
+
+class SlidePrewBtn extends Component {
+
+  handleSlidePrew = (e) => {
+
+    e.preventDefault();
+
+    this.props.onPrewFunction(e);
+
+  }
+
+  render() {
+
+    return (
+      <div className="next-slide">
+        <button onClick={this.handleSlidePrew}  ><i className="fa fa-arrow-up" aria-hidden="true"></i></button>
+      </div>
+    );
+
+  }
+
+}
+
 class App extends Component {
 
   constructor( props ) {
@@ -82,16 +122,38 @@ class App extends Component {
     this.state = {
       imageList: [],
       bigImageUrl: "",
-      bigImgageAlt: ""
+      bigImgageAlt: "",
+      isSliderActive: false,
+      sliderData: null,
+      currentSlide: 1
     }
   }
 
   componentDidMount() {
+
     fetch('http://meyer.test/wp-json/wp/v2/media/?per_page=100')
       .then(response => response.json())
       .then(data => this.setState({ imageList: data, bigImageUrl: data[0].guid.rendered, bigImgageAlt: data[0].title.rendered }));
 
     setTimeout(() => { window.dispatchEvent(new Event('resize')) }, 0);
+
+    let thumbSwiper = null;
+
+    if ( this.state.isSliderActive === false ) {
+
+      thumbSwiper = new Swiper( '.thumbs-wrap', {
+          direction: 'vertical',
+          slidesPerView: 1,
+          height: 160
+      });
+
+      this.setState({
+        isSliderActive: true,
+        sliderData: thumbSwiper
+      });
+
+    }
+
   }
 
   handleClickedData = (passedData) => {
@@ -99,6 +161,48 @@ class App extends Component {
       bigImageUrl: passedData[0],
       bigImgageAlt: passedData[1]
     });
+  }
+
+  triggerNextSlide = (passedData) => {
+
+    this.state.sliderData.slideNext();
+    let nextNumber = this.state.imageList.length;
+
+    if ( this.state.currentSlide < this.state.imageList.length ) {
+      nextNumber = this.state.currentSlide + 1;
+    }
+
+    setTimeout(() => {
+
+      this.setState({
+        bigImageUrl: $('body').find( '.swiper-slide-active' ).find( 'img' ).attr('original'),
+        bigImgageAlt: $('body').find( '.swiper-slide-active' ).find( 'img' ).attr('alt'),
+        currentSlide: nextNumber
+      });
+
+    }, 100);
+
+  }
+
+  triggerPrewSlide = (passedData) => {
+
+    this.state.sliderData.slidePrev();
+    let prevNumber = 1;
+
+    if ( this.state.currentSlide > 2 ) {
+      prevNumber = this.state.currentSlide - 1;
+    }
+
+    setTimeout(() => {
+
+      this.setState({
+        bigImageUrl: $('body').find( '.swiper-slide-active' ).find( 'img' ).attr('original'),
+        bigImgageAlt: $('body').find( '.swiper-slide-active' ).find( 'img' ).attr('alt'),
+        currentSlide: prevNumber
+      });
+
+    }, 100);
+
   }
 
   render() {
@@ -115,6 +219,8 @@ class App extends Component {
 
                 <ImageThumbs clickedDataHandler={this.handleClickedData} thumbList={this.state.imageList} />
 
+                <SlideNextBtn onClickFunction={this.triggerNextSlide} />
+
               </div>
             </div>
 
@@ -124,6 +230,43 @@ class App extends Component {
                 <img src={this.state.bigImageUrl} alt={this.state.bigImgageAlt} />
 
               </div>
+            </div>
+
+            <div className="col-sm-12 col-md-3">
+
+              <div className="slide-share-right full-height">
+
+                <div className="top-nav-bar">
+                  <div className="top-nav-bar-left">
+                    <span> <i className="fa fa-comments" aria-hidden="true"></i></span>
+                    <span><i className="fa fa-instagram" aria-hidden="true"></i></span>
+                    <span><i className="fa fa-envelope" aria-hidden="true"></i></span>
+                  </div>
+                  <div className="top-nav-bar-right">
+                    <span>English</span>
+                  </div>
+                </div>
+
+                <div className="slides-info">
+                  <span className="title-one">Autumn 2018</span>
+                  <h1>Meyer Trousers</h1>
+
+                  <div className="slide-counts">
+                    <span>Look {this.state.currentSlide}/{this.state.imageList.length}</span>
+                  </div>
+
+                </div>
+
+                <div className="slides-bottom-ctrl">
+                  <div className="bottom-ctrl-btns">
+                    <SlideNextBtn onClickFunction={this.triggerNextSlide} />
+                    <SlidePrewBtn onPrewFunction={this.triggerPrewSlide} />
+                  </div>
+                  <span><i className="fa fa-copyright" aria-hidden="true"></i> Photo By Meyer</span>
+                </div>
+
+              </div>
+
             </div>
 
           </div>
