@@ -3,6 +3,8 @@ import logo from './images/meyer-logo.png';
 import './css/main.min.css';
 import Swiper from 'swiper';
 import $ from 'jquery';
+import Swipe from 'react-easy-swipe';
+import 'bootstrap';
 
 class SingleThumb extends Component {
 
@@ -115,6 +117,20 @@ class SlidePrewBtn extends Component {
 
 }
 
+class SlideCounts extends Component {
+
+  render() {
+
+    return (
+      <div className="slide-counts">
+        <span><span className="slide-counts-text">Look</span> {this.props.currentSlide}/{this.props.imageLength}</span>
+      </div>
+    );
+
+  }
+
+}
+
 class App extends Component {
 
   constructor( props ) {
@@ -135,7 +151,7 @@ class App extends Component {
       .then(response => response.json())
       .then(data => this.setState({ imageList: data, bigImageUrl: data[0].guid.rendered, bigImgageAlt: data[0].title.rendered }));
 
-    setTimeout(() => { window.dispatchEvent(new Event('resize')) }, 0);
+    setTimeout(() => { window.dispatchEvent(new Event('resize')) }, 100);
 
     let thumbSwiper = null;
 
@@ -174,6 +190,9 @@ class App extends Component {
 
     setTimeout(() => {
 
+      window.dispatchEvent(new Event('resize'));
+
+
       this.setState({
         bigImageUrl: $('body').find( '.swiper-slide-active' ).find( 'img' ).attr('original'),
         bigImgageAlt: $('body').find( '.swiper-slide-active' ).find( 'img' ).attr('alt'),
@@ -195,6 +214,8 @@ class App extends Component {
 
     setTimeout(() => {
 
+      window.dispatchEvent(new Event('resize'));
+
       this.setState({
         bigImageUrl: $('body').find( '.swiper-slide-active' ).find( 'img' ).attr('original'),
         bigImgageAlt: $('body').find( '.swiper-slide-active' ).find( 'img' ).attr('alt'),
@@ -210,8 +231,10 @@ class App extends Component {
       <div className="App full-height">
         <div className="container-fluid slide-share-wrap full-height">
           <div className="row no-gutters full-height">
-            <div className="col-sm-12 col-md-3">
+            <div className="col-sm-12 col-md-12 col-xl-3">
               <div className="slide-share-left full-height">
+
+                <SlideCounts currentSlide={this.state.currentSlide} imageLength={this.state.imageList.length} />
 
                 <a href="/" className="site-logo">
                   <img src={logo} className="img-responsive" alt="app-logo" />
@@ -221,18 +244,23 @@ class App extends Component {
 
                 <SlideNextBtn onClickFunction={this.triggerNextSlide} />
 
-              </div>
-            </div>
-
-            <div className="col-sm-12 col-md-6">
-              <div className="slide-share-middle full-height">
-
-                <img src={this.state.bigImageUrl} alt={this.state.bigImgageAlt} />
+                <div className="top-nav-bar-right">
+                  <span>English</span>
+                </div>
 
               </div>
             </div>
 
-            <div className="col-sm-12 col-md-3">
+            <div className="col-sm-12 col-md-12 col-xl-6">
+              <div className="slide-share-middle full-height" >
+                <Swipe onSwipeRight={this.triggerPrewSlide} onSwipeLeft={this.triggerNextSlide}>
+                  <img src={this.state.bigImageUrl} alt={this.state.bigImgageAlt} />
+                </Swipe>
+
+              </div>
+            </div>
+
+            <div className="col-sm-12 col-md-12 col-xl-3">
 
               <div className="slide-share-right full-height">
 
@@ -251,9 +279,7 @@ class App extends Component {
                   <span className="title-one">Autumn 2018</span>
                   <h1>Meyer Trousers</h1>
 
-                  <div className="slide-counts">
-                    <span>Look {this.state.currentSlide}/{this.state.imageList.length}</span>
-                  </div>
+                  <SlideCounts currentSlide={this.state.currentSlide} imageLength={this.state.imageList.length} />
 
                 </div>
 
@@ -262,7 +288,7 @@ class App extends Component {
                     <SlideNextBtn onClickFunction={this.triggerNextSlide} />
                     <SlidePrewBtn onPrewFunction={this.triggerPrewSlide} />
                   </div>
-                  <span><i className="fa fa-copyright" aria-hidden="true"></i> Photo By Meyer</span>
+                  <span><i className="fa fa-copyright" aria-hidden="true"></i> Photo By Meyer </span>
                 </div>
 
               </div>

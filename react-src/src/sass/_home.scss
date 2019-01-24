@@ -5,12 +5,23 @@ html {
 }
 .full-height {
   height: 100%;
+
+  @media only screen and (max-width : 1199px) {
+    height: auto;
+  }
 }
 #root {
   height: 100%;
 }
 body {
   background-color: $light_gray;
+  font-family: 'Montserrat', sans-serif, '-apple-system', 'BlinkMacSystemFont';
+}
+h1,
+h2,
+h3,
+h4 {
+  font-family: 'Montserrat', sans-serif, '-apple-system', 'BlinkMacSystemFont';
 }
 .slide-share-wrap {
   padding-left: 0;
@@ -22,8 +33,60 @@ body {
   padding: 40px 30px;
   overflow: hidden;
 
+  @media only screen and (max-width : 1199px) {
+    max-width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px 30px;
+
+    .next-slide{
+      display: none;
+    }
+
+    .slide-counts,
+    .top-nav-bar-right {
+      flex-basis: 20%;
+      font-size: 18px;
+    }
+
+    .slide-counts {
+      .slide-counts-text {
+        display: none;
+      }
+      span {
+        font-size: 20px;
+      }
+    }
+
+    .site-logo {
+      flex-basis: 60%;
+    }
+  }
+
+  @media only screen and (max-width : 768px) {
+    padding: 15px;
+  }
+
   .thumbs-wrap {
     max-height: 700px;
+
+    @media only screen and (max-width : 1199px) {
+      height: 0;
+      margin: 0;
+      width: 1px;
+      position: absolute;
+    }
+  }
+
+  @media only screen and (min-width : 1200px) {
+    .slide-counts,
+    .top-nav-bar-right {
+      display: none;
+    }
   }
 }
 .site-logo{
@@ -32,6 +95,10 @@ body {
     width: 100%;
     display: block;
     margin: 0 auto;
+
+    @media only screen and (max-width : 600px) {
+      max-width: 110px;
+    }
   }
 }
 .thumbs-wrap {
@@ -60,17 +127,29 @@ body {
 
 .slide-share-middle {
   overflow: hidden;
+
+  div {
+    overflow: hidden;
+    height: 100%;
+  }
+
   img {
     height: 100%;
     display: block;
     margin: 0 auto;
+
+    @media only screen and (max-width : 1199px) {
+      height: auto;
+      width: 100%;
+      max-width: 100%;
+    }
   }
 }
 
 .next-slide {
   button {
-    width: 25px;
-    height: 25px;
+    width: 30px;
+    height: 30px;
     margin: 20px auto 0;
     display: block;
     color: $black;
@@ -78,7 +157,6 @@ body {
     border-radius: 50%;
     text-align: center;
     background: transparent;
-    padding: 0 0 0 2px;
     cursor: pointer;
 
     &:focus {
@@ -94,11 +172,20 @@ body {
 .slide-share-right {
   padding: 20px 30px;
   position: relative;
+
+  @media only screen and (max-width : 1199px) {
+    padding: 15px;
+  }
+
 }
 
 .top-nav-bar {
   display: inline-block;
   width: 100%;
+
+  @media only screen and (max-width : 1199px) {
+    display: none;
+  }
 
   .top-nav-bar-left {
     float: left;
@@ -125,6 +212,10 @@ body {
   padding-top: 50px;
   text-transform: uppercase;
 
+  @media only screen and (max-width : 1199px) {
+    padding-top: 0;
+  }
+
   .slide-counts {
     display: inline-block;
     width: 100%;
@@ -133,6 +224,17 @@ body {
     border-bottom: 1px solid $black;
     padding-top: 15px;
     padding-bottom: 15px;
+
+
+
+    span {
+      font-size: 20px;
+    }
+  }
+
+  h1 {
+    font-size: 30px;
+    font-weight: 700;
   }
 }
 
@@ -143,6 +245,10 @@ body {
   left: 0;
   text-align: center;
   text-transform: uppercase;
+
+  @media only screen and (max-width : 1199px) {
+    display: none;
+  }
 
   .bottom-ctrl-btns {
     margin-bottom: 10px;

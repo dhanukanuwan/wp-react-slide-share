@@ -98,6 +98,7 @@ add_action( 'widgets_init', 'meyer_widgets_init' );
 
 function meyer_themes_scripts() {
 	wp_enqueue_style( 'meyer-fontawesome', get_stylesheet_directory_uri() . '/css/font-awesome.min.css' );
+	wp_enqueue_style( 'meyer-g-font', 'https://fonts.googleapis.com/css?family=Montserrat:400,500,700' );
 }
 add_action( 'wp_enqueue_scripts', 'meyer_themes_scripts' );
 
