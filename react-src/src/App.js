@@ -147,7 +147,7 @@ class App extends Component {
 
   componentDidMount() {
 
-    fetch('http://meyer.test/wp-json/wp/v2/media/?per_page=100')
+    fetch( window.location.origin + '/wp-json/wp/v2/media/?per_page=100')
       .then(response => response.json())
       .then(data => this.setState({ imageList: data, bigImageUrl: data[0].guid.rendered, bigImgageAlt: data[0].title.rendered }));
 
