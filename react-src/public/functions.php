@@ -102,4 +102,6 @@ function meyer_themes_scripts() {
 }
 add_action( 'wp_enqueue_scripts', 'meyer_themes_scripts' );
 
+add_filter('show_admin_bar', '__return_false');
+
 ?>

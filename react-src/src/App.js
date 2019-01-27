@@ -123,12 +123,54 @@ class SlideCounts extends Component {
 
     return (
       <div className="slide-counts">
-        <span><span className="slide-counts-text">Look</span> {this.props.currentSlide}/{this.props.imageLength}</span>
+        <span><span className="slide-counts-text">{this.props.countText}</span> {this.props.currentSlide}/{this.props.imageLength}</span>
       </div>
     );
 
   }
 
+}
+
+class LanguageSwitcher extends Component {
+
+  toggleSwitcher = (e) => {
+
+    const switcherMain = $( e.target );
+
+    if ( switcherMain.hasClass('active') ) {
+      switcherMain.removeClass('active');
+      switcherMain.closest('.top-nav-bar-right').find('.lan-drop').removeClass('active');
+    } else {
+      switcherMain.addClass('active');
+      switcherMain.closest('.top-nav-bar-right').find('.lan-drop').addClass('active');
+    }
+
+  }
+
+  switchLanguage = (e) => {
+
+    const clikedItem = $( e.target );
+
+    clikedItem.closest('.top-nav-bar-right').find('.lan-drop').removeClass('active');
+    clikedItem.closest('.top-nav-bar-right').find('.selected-lan').removeClass('active');
+
+    this.props.onSelectFunction( e.target.innerText );
+  }
+
+  render() {
+    return (
+      <div className="top-nav-bar-right">
+        <span className="selected-lan" onClick={this.toggleSwitcher}>
+          <span className="mobile">{this.props.activeLan.substring(0,2)}</span>
+          <span className="desktop">{this.props.activeLan}</span>
+        </span>
+        <div className="lan-drop">
+          <span onClick={this.switchLanguage}>English</span>
+          <span onClick={this.switchLanguage}>Chinese</span>
+        </div>
+      </div>
+    );
+  }
 }
 
 class App extends Component {
@@ -141,7 +183,13 @@ class App extends Component {
       bigImgageAlt: "",
       isSliderActive: false,
       sliderData: null,
-      currentSlide: 1
+      currentSlide: 1,
+      pageAcfData: [],
+      language: 'English',
+      titleOne: '',
+      titleTwo: '',
+      slideNumText: '',
+      copyrightText: ''
     }
   }
 
@@ -150,6 +198,16 @@ class App extends Component {
     fetch( window.location.origin + '/wp-json/wp/v2/media/?per_page=100')
       .then(response => response.json())
       .then(data => this.setState({ imageList: data, bigImageUrl: data[0].guid.rendered, bigImgageAlt: data[0].title.rendered }));
+
+    fetch( window.location.origin + '/wp-json/acf/v3/pages')
+      .then(response => response.json())
+      .then(data => this.setState({
+        pageAcfData: data,
+        titleOne: data[0].acf.gallery_title_one,
+        titleTwo: data[0].acf.gallery_title_two,
+        slideNumText: data[0].acf.slide_number_text,
+        copyrightText: data[0].acf.copyright_text
+      }));
 
     setTimeout(() => { window.dispatchEvent(new Event('resize')) }, 100);
 
@@ -226,7 +284,40 @@ class App extends Component {
 
   }
 
+  triggerLanSwitch = ( selectedLan ) => {
+
+    this.setState({
+      language: selectedLan
+    });
+
+    let titleOne = null;
+    let titleTwo = null;
+    let slideNumText = null;
+    let copyrightText = null;
+
+    if ( selectedLan === 'English' ) {
+      titleOne = this.state.pageAcfData[0].acf.gallery_title_one;
+      titleTwo = this.state.pageAcfData[0].acf.gallery_title_two;
+      slideNumText = this.state.pageAcfData[0].acf.slide_number_text;
+      copyrightText = this.state.pageAcfData[0].acf.copyright_text;
+    } else {
+      titleOne = this.state.pageAcfData[0].acf.gallery_title_one_chinese;
+      titleTwo = this.state.pageAcfData[0].acf.gallery_title_two_chinese;
+      slideNumText = this.state.pageAcfData[0].acf.slide_number_text_chinese;
+      copyrightText = this.state.pageAcfData[0].acf.copyright_text_chinese;
+    }
+
+    this.setState({
+      titleOne: titleOne,
+      titleTwo: titleTwo,
+      slideNumText: slideNumText,
+      copyrightText: copyrightText
+    });
+
+  }
+
   render() {
+
     return (
       <div className="App full-height">
         <div className="container-fluid slide-share-wrap full-height">
@@ -244,9 +335,7 @@ class App extends Component {
 
                 <SlideNextBtn onClickFunction={this.triggerNextSlide} />
 
-                <div className="top-nav-bar-right">
-                  <span>English</span>
-                </div>
+                <LanguageSwitcher activeLan={this.state.language} onSelectFunction={this.triggerLanSwitch} />
 
               </div>
             </div>
@@ -270,16 +359,16 @@ class App extends Component {
                     <span><i className="fa fa-instagram" aria-hidden="true"></i></span>
                     <span><i className="fa fa-envelope" aria-hidden="true"></i></span>
                   </div>
-                  <div className="top-nav-bar-right">
-                    <span>English</span>
-                  </div>
+
+                  <LanguageSwitcher activeLan={this.state.language} onSelectFunction={this.triggerLanSwitch} />
+
                 </div>
 
                 <div className="slides-info">
-                  <span className="title-one">Autumn 2018</span>
-                  <h1>Meyer Trousers</h1>
+                  <span className="title-one">{this.state.titleOne}</span>
+                  <h1>{this.state.titleTwo}</h1>
 
-                  <SlideCounts currentSlide={this.state.currentSlide} imageLength={this.state.imageList.length} />
+                  <SlideCounts countText={this.state.slideNumText} currentSlide={this.state.currentSlide} imageLength={this.state.imageList.length} />
 
                 </div>
 
@@ -288,7 +377,7 @@ class App extends Component {
                     <SlideNextBtn onClickFunction={this.triggerNextSlide} />
                     <SlidePrewBtn onPrewFunction={this.triggerPrewSlide} />
                   </div>
-                  <span><i className="fa fa-copyright" aria-hidden="true"></i> Photo By Meyer </span>
+                  <span><i className="fa fa-copyright" aria-hidden="true"></i> {this.state.copyrightText} </span>
                 </div>
 
               </div>

@@ -76,16 +76,7 @@ h4 {
 
   @media only screen and (max-width : 768px) {
     padding: 15px;
-
-    .top-nav-bar-right {
-      font-size: 14px;
-    }
-
-    .slide-counts {
-      span {
-        font-size: 14px;
-      }
-    }
+    overflow: inherit;
   }
 
   .thumbs-wrap {
@@ -144,6 +135,10 @@ h4 {
 
 .slide-share-middle {
   overflow: hidden;
+
+  @media only screen and (max-width : 1199px) {
+    margin-top: 15px;
+  }
 
   div {
     overflow: hidden;
@@ -217,9 +212,103 @@ h4 {
       }
     }
   }
+}
 
-  .top-nav-bar-right {
-    float: right;
+.top-nav-bar-right {
+  float: right;
+  position: relative;
+
+  .selected-lan {
+    padding-right: 30px;
+    cursor: pointer;
+
+    .mobile {
+      display: none;
+    }
+
+    @media only screen and (max-width : 600px) {
+      padding-right: 10px;
+
+      .mobile {
+        display: inline-block;
+        text-transform: uppercase;
+      }
+      .desktop {
+        display: none;
+      }
+    }
+
+    &:after {
+      position: absolute;
+      content: '';
+      width: 7px;
+      height: 7px;
+      display: inline-block;
+      border-right: 1px solid $black;
+      border-bottom: 1px solid $black;
+      transform: rotate( 45deg );
+      top: 6px;
+      right: 0;
+      -webkit-transition: all 0.3s ease;
+      -moz-transition: all 0.3s ease;
+      -o-transition: all 0.3s ease;
+      -ms-transition: all 0.3s ease;
+      transition: all 0.3s ease;
+    }
+
+    &.active {
+      &:after {
+        transform: rotate( -135deg );
+        top: 10px;
+      }
+    }
+  }
+
+  .lan-drop {
+    position: absolute;
+    width: 130px;
+    background: #fff;
+    left: -20%;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+    height: 0;
+    padding: 0;
+    opacity: 0;
+    overflow: hidden;
+
+    &.active {
+      padding: 5px 10px;
+      height: auto;
+      overflow: inherit;
+      opacity: 1;
+    }
+
+    span {
+      display: block;
+      cursor: pointer;
+      font-size: 14px;
+      padding-left: 5px;
+      margin-bottom: 5px;
+
+      &:hover {
+        background-color: $light_gray;
+      }
+
+
+    }
+
+    @media only screen and (max-width : 1199px) {
+      left: -92%;
+      z-index: 9;
+      border: 1px solid rgba(0,0,0,0.1);
+
+      span {
+        text-align: left;
+      }
+    }
   }
 }
 
@@ -233,6 +322,12 @@ h4 {
     padding-top: 0;
   }
 
+  @media only screen and (max-width : 768px) {
+    .title-one {
+      font-size: 14px;
+    }
+  }
+
   .slide-counts {
     display: inline-block;
     width: 100%;
@@ -242,16 +337,28 @@ h4 {
     padding-top: 15px;
     padding-bottom: 15px;
 
-
+    @media only screen and (max-width : 768px) {
+      padding-top: 7px;
+      padding-bottom: 7px;
+      margin-top: 0;
+    }
 
     span {
       font-size: 20px;
+
+      @media only screen and (max-width : 768px) {
+        font-size: 16px;
+      }
     }
   }
 
   h1 {
     font-size: 30px;
     font-weight: 700;
+
+    @media only screen and (max-width : 768px) {
+      font-size: 20px;
+    }
   }
 }
 
