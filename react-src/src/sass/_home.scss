@@ -49,8 +49,15 @@ h4 {
 
     .slide-counts,
     .top-nav-bar-right {
-      flex-basis: 20%;
       font-size: 18px;
+    }
+
+    .slide-counts {
+      flex-basis: 17%;
+    }
+
+    .top-nav-bar-right {
+      flex-basis: 20%;
     }
 
     .slide-counts {
@@ -69,6 +76,16 @@ h4 {
 
   @media only screen and (max-width : 768px) {
     padding: 15px;
+
+    .top-nav-bar-right {
+      font-size: 14px;
+    }
+
+    .slide-counts {
+      span {
+        font-size: 14px;
+      }
+    }
   }
 
   .thumbs-wrap {
