@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/wp-content/themes/meyer/precache-manifest.0645d5c2194f1d1e611d36e4d30b88d9.js"
+  "/wp-content/themes/meyer/precache-manifest.db6e2ea3b40f4b0d22ae1eabeadc0ac7.js"
 );
 
 workbox.clientsClaim();

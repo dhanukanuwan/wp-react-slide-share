@@ -365,7 +365,7 @@ class App extends Component {
             </div>
 
             <div className="col-sm-12 col-md-12 col-xl-6">
-              <div className="slide-share-middle full-height" >
+              <div className="slide-share-middle full-height" style={{height: ( $(window).height() - 120 ) }}>
                 <Swipe onSwipeRight={this.triggerPrewSlide} onSwipeLeft={this.triggerNextSlide}>
                   {this.state.imageList.map( ( image , i ) => <img id={'image' + image.id} src={image.guid.rendered} alt={this.state.bigImgageAlt} key={i} /> )}
                 </Swipe>
