@@ -38,7 +38,7 @@ class SingleThumb extends Component {
 
     return (
       <div className="swiper-slide">
-        <img src={imageData.media_details.sizes.slide_thumb.source_url} onClick={this.handleClick} alt={imageData.title.rendered} original={imageData.guid.rendered} />
+        <img thumbid={imageData.id} src={imageData.media_details.sizes.slide_thumb.source_url} onClick={this.handleClick} alt={imageData.title.rendered} original={imageData.guid.rendered} />
       </div>
     );
 
@@ -250,10 +250,22 @@ class App extends Component {
 
       window.dispatchEvent(new Event('resize'));
 
+      const displayedImageID = $('body').find( '.swiper-slide-active' ).find( 'img' ).attr( 'thumbid' );
+      const prevImageID = $('body').find( '.swiper-slide-prev' ).find( 'img' ).attr( 'thumbid' );
+
+      const displayedImage = $( 'body' ).find( '.slide-share-middle' ).find( '#image' + displayedImageID );
+      const prevImage = $( 'body' ).find( '.slide-share-middle' ).find( '#image' + prevImageID );
+
+      if ( displayedImage.length > 0 ) {
+        displayedImage.removeClass('fadeOutLeft fadeInRight fadeOutRight fadeInLeft faster animated').addClass('fadeInRight animated faster');
+      }
+
+      if ( prevImage.length > 0 ) {
+        prevImage.removeClass('fadeOutLeft fadeInRight fadeOutRight fadeInLeft faster animated').addClass('fadeOutLeft animated faster');
+      }
+
 
       this.setState({
-        bigImageUrl: $('body').find( '.swiper-slide-active' ).find( 'img' ).attr('original'),
-        bigImgageAlt: $('body').find( '.swiper-slide-active' ).find( 'img' ).attr('alt'),
         currentSlide: nextNumber
       });
 
@@ -274,9 +286,21 @@ class App extends Component {
 
       window.dispatchEvent(new Event('resize'));
 
+      const displayedImageID = $('body').find( '.swiper-slide-active' ).find( 'img' ).attr( 'thumbid' );
+      const nextImageID = $('body').find( '.swiper-slide-next' ).find( 'img' ).attr( 'thumbid' );
+
+      const displayedImage = $( 'body' ).find( '.slide-share-middle' ).find( '#image' + displayedImageID );
+      const nextImage = $( 'body' ).find( '.slide-share-middle' ).find( '#image' + nextImageID );
+
+      if ( displayedImage.length > 0 ) {
+        displayedImage.removeClass('fadeOutLeft fadeInRight fadeOutRight fadeInLeft faster animated').addClass('fadeInLeft animated faster');
+      }
+
+      if ( nextImage.length > 0 ) {
+        nextImage.removeClass('fadeOutLeft fadeInRight fadeOutRight fadeInLeft faster animated').addClass('fadeOutRight animated faster');
+      }
+
       this.setState({
-        bigImageUrl: $('body').find( '.swiper-slide-active' ).find( 'img' ).attr('original'),
-        bigImgageAlt: $('body').find( '.swiper-slide-active' ).find( 'img' ).attr('alt'),
         currentSlide: prevNumber
       });
 
@@ -343,7 +367,7 @@ class App extends Component {
             <div className="col-sm-12 col-md-12 col-xl-6">
               <div className="slide-share-middle full-height" >
                 <Swipe onSwipeRight={this.triggerPrewSlide} onSwipeLeft={this.triggerNextSlide}>
-                  <img src={this.state.bigImageUrl} alt={this.state.bigImgageAlt} />
+                  {this.state.imageList.map( ( image , i ) => <img id={'image' + image.id} src={image.guid.rendered} alt={this.state.bigImgageAlt} key={i} /> )}
                 </Swipe>
 
               </div>
