@@ -252,6 +252,7 @@ class App extends Component {
 
       const displayedImageID = $('body').find( '.swiper-slide-active' ).find( 'img' ).attr( 'thumbid' );
       const prevImageID = $('body').find( '.swiper-slide-prev' ).find( 'img' ).attr( 'thumbid' );
+      const displayedImageAlt = $('body').find( '.swiper-slide-active' ).find( 'img' ).attr( 'alt' );
 
       const displayedImage = $( 'body' ).find( '.slide-share-middle' ).find( '#image' + displayedImageID );
       const prevImage = $( 'body' ).find( '.slide-share-middle' ).find( '#image' + prevImageID );
@@ -266,7 +267,8 @@ class App extends Component {
 
 
       this.setState({
-        currentSlide: nextNumber
+        currentSlide: nextNumber,
+        bigImgageAlt: displayedImageAlt
       });
 
     }, 100);
@@ -288,6 +290,7 @@ class App extends Component {
 
       const displayedImageID = $('body').find( '.swiper-slide-active' ).find( 'img' ).attr( 'thumbid' );
       const nextImageID = $('body').find( '.swiper-slide-next' ).find( 'img' ).attr( 'thumbid' );
+      const displayedImageAlt = $('body').find( '.swiper-slide-active' ).find( 'img' ).attr( 'alt' );
 
       const displayedImage = $( 'body' ).find( '.slide-share-middle' ).find( '#image' + displayedImageID );
       const nextImage = $( 'body' ).find( '.slide-share-middle' ).find( '#image' + nextImageID );
@@ -301,7 +304,8 @@ class App extends Component {
       }
 
       this.setState({
-        currentSlide: prevNumber
+        currentSlide: prevNumber,
+        bigImgageAlt: displayedImageAlt
       });
 
     }, 100);
@@ -365,7 +369,7 @@ class App extends Component {
             </div>
 
             <div className="col-sm-12 col-md-12 col-xl-6">
-              <div className="slide-share-middle full-height" style={{height: ( $(window).height() - 120 ) }}>
+              <div className="slide-share-middle full-height" style={{height: ( $(window).height() - 170 ) }}>
                 <Swipe onSwipeRight={this.triggerPrewSlide} onSwipeLeft={this.triggerNextSlide}>
                   {this.state.imageList.map( ( image , i ) => <img id={'image' + image.id} src={image.guid.rendered} alt={this.state.bigImgageAlt} key={i} /> )}
                 </Swipe>
@@ -389,10 +393,19 @@ class App extends Component {
                 </div>
 
                 <div className="slides-info">
-                  <span className="title-one">{this.state.titleOne}</span>
+                  <span className="title-one">{this.state.bigImgageAlt}</span>
                   <h1>{this.state.titleTwo}</h1>
 
                   <SlideCounts countText={this.state.slideNumText} currentSlide={this.state.currentSlide} imageLength={this.state.imageList.length} />
+
+                  <div className="mobile-footer">
+                    <span className="mobile-copyright"><i className="fa fa-copyright" aria-hidden="true"></i> {this.state.copyrightText} </span>
+                    <div className="top-nav-bar-left">
+                      <span> <i className="fa fa-comments" aria-hidden="true"></i></span>
+                      <span><i className="fa fa-instagram" aria-hidden="true"></i></span>
+                      <span><i className="fa fa-envelope" aria-hidden="true"></i></span>
+                    </div>
+                  </div>
 
                 </div>
 
