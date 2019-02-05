@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import logo from './images/meyer-logo.png';
+import wechat from './images/wechat.jpg';
 import './css/main.min.css';
 import Swiper from 'swiper';
 import $ from 'jquery';
@@ -169,6 +170,95 @@ class LanguageSwitcher extends Component {
           <span onClick={this.switchLanguage}>Chinese</span>
         </div>
       </div>
+    );
+  }
+}
+
+class SocialIcons extends Component {
+
+  render() {
+    return (
+      <div className="top-nav-bar-left">
+        <button type="button" data-toggle="modal" data-target="#wechatmodel"><i className="fa fa-comments" aria-hidden="true"></i></button>
+        <button type="button" data-toggle="modal" data-target="#emailmodel"><i className="fa fa-envelope" aria-hidden="true"></i></button>
+      </div>
+    );
+  }
+}
+
+class SocialModels extends Component {
+
+  handleShare = (event) => {
+
+    event.preventDefault();
+
+    const submitBtn = $('body').find( '#sharelookbook' );
+
+    submitBtn.find( 'i' ).removeClass('fa-envelope-o').addClass('fa-spinner fa-spin');
+
+    const data = {
+			'action': 'trigger_lookbook_share',
+      'share_email': $('body').find('#share_email').val()
+		};
+
+		$.post('/wp-admin/admin-ajax.php', data, function(response) {
+			submitBtn.find( 'i' ).removeClass('fa-envelope-o fa-spinner fa-spin').addClass('fa-check');
+      submitBtn.find('span').text('Done');
+		});
+
+  }
+
+  render() {
+    return (
+
+      <div>
+        <div className="modal fade social-models-wrap" id="wechatmodel" >
+          <div className="modal-dialog modal-dialog-centered" role="document">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title" id="wechatmodelLabel">WeChat QR Code</h5>
+                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div className="modal-body social-models">
+                <img src={wechat} alt="WeChat QR" />
+              </div>
+              <div className="modal-footer">
+                <button type="button" className="btn btn-primary" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="modal fade social-models-wrap" id="emailmodel" >
+          <div className="modal-dialog modal-dialog-centered" role="document">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title" id="wechatmodelLabel">Share This Look Book</h5>
+                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <form action="" method="post" id="lookBookShare" onSubmit={this.handleShare} >
+                <div className="modal-body social-models">
+                    <div className="form-group">
+                      <input type="email" className="form-control" id="share_email" name="share_email" placeholder="Enter email address" required />
+                    </div>
+                </div>
+                <div className="modal-footer">
+                  <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="submit" className="btn btn-primary" id="sharelookbook" >
+                    <i className="fa fa-envelope-o"></i>
+                    <span>Share</span>
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
     );
   }
 }
@@ -382,11 +472,7 @@ class App extends Component {
               <div className="slide-share-right full-height">
 
                 <div className="top-nav-bar">
-                  <div className="top-nav-bar-left">
-                    <span> <i className="fa fa-comments" aria-hidden="true"></i></span>
-                    <span><i className="fa fa-instagram" aria-hidden="true"></i></span>
-                    <span><i className="fa fa-envelope" aria-hidden="true"></i></span>
-                  </div>
+                  <SocialIcons />
 
                   <LanguageSwitcher activeLan={this.state.language} onSelectFunction={this.triggerLanSwitch} />
 
@@ -400,11 +486,8 @@ class App extends Component {
 
                   <div className="mobile-footer">
                     <span className="mobile-copyright"><i className="fa fa-copyright" aria-hidden="true"></i> {this.state.copyrightText} </span>
-                    <div className="top-nav-bar-left">
-                      <span> <i className="fa fa-comments" aria-hidden="true"></i></span>
-                      <span><i className="fa fa-instagram" aria-hidden="true"></i></span>
-                      <span><i className="fa fa-envelope" aria-hidden="true"></i></span>
-                    </div>
+
+                    <SocialIcons />
                   </div>
 
                 </div>
@@ -423,6 +506,8 @@ class App extends Component {
 
           </div>
         </div>
+
+        <SocialModels />
       </div>
     );
   }

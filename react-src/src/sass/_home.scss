@@ -190,6 +190,10 @@ h4 {
       width: 100%;
       max-width: 100%;
     }
+
+    @media only screen and (max-width : 500px) {
+      height: 100%;
+    }
   }
 }
 
@@ -248,11 +252,19 @@ h4 {
 
 .top-nav-bar-left {
   float: left;
-  span {
+  button {
     font-size: 20px;
     line-height: 20px;
     display: inline-block;
     margin-right: 10px;
+    background: transparent;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+
+    &:focus {
+      outline: 0;
+    }
 
     &:last-child {
       margin-right: 0;
@@ -463,6 +475,32 @@ h4 {
     button {
       i {
         -webkit-text-stroke: 2px $light_gray;
+      }
+    }
+  }
+}
+
+.social-models {
+  img {
+    max-width: 100%;
+    display: block;
+    margin: 0 auto;
+  }
+
+  input {
+    &:focus {
+      box-shadow: none;
+      outline: none;
+    }
+  }
+}
+.social-models-wrap {
+  display: none;
+
+  .modal-footer {
+    button {
+      span {
+        margin-left: 7px;
       }
     }
   }

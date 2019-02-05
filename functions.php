@@ -105,4 +105,27 @@ add_action( 'wp_enqueue_scripts', 'meyer_themes_scripts' );
 
 add_filter('show_admin_bar', '__return_false');
 
+function trigger_lookbook_share() {
+
+	$share_email = null;
+
+	if ( isset( $_POST['share_email'] ) ) {
+		$share_email = sanitize_email( $_POST['share_email'] );
+	}
+
+	if ( ! empty ( $share_email ) ) {
+
+		$headers[] = 'From: Meyer <noreply@meyer.net>';
+		$headers[] = 'Content-Type: text/html; charset=UTF-8';
+
+		wp_mail( $share_email, 'Meyer LookBook Share', get_home_url(), $headers );
+
+	}
+
+	wp_die();
+}
+
+add_action( 'wp_ajax_trigger_lookbook_share', 'trigger_lookbook_share' );
+add_action( 'wp_ajax_nopriv_trigger_lookbook_share', 'trigger_lookbook_share' );
+
 ?>
