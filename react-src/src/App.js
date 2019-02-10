@@ -440,7 +440,7 @@ class App extends Component {
       <div className="App full-height">
         <div className="container-fluid slide-share-wrap full-height">
           <div className="row no-gutters full-height">
-            <div className="col-sm-12 col-md-12 col-xl-3">
+            <div className="col-sm-12 col-md-3 col-xl-3 slide-share-left-wrap">
               <div className="slide-share-left full-height">
 
                 <SlideCounts currentSlide={this.state.currentSlide} imageLength={this.state.imageList.length} />
@@ -458,7 +458,7 @@ class App extends Component {
               </div>
             </div>
 
-            <div className="col-sm-12 col-md-12 col-xl-6">
+            <div className="col-sm-12 col-md-6 col-xl-6 slide-share-middle-wrap">
               <div className="slide-share-middle full-height" style={{height: ( $(window).height() - 170 ) }}>
                 <Swipe onSwipeRight={this.triggerPrewSlide} onSwipeLeft={this.triggerNextSlide}>
                   {this.state.imageList.map( ( image , i ) => <img id={'image' + image.id} src={image.guid.rendered} alt={this.state.bigImgageAlt} key={i} /> )}
@@ -467,7 +467,7 @@ class App extends Component {
               </div>
             </div>
 
-            <div className="col-sm-12 col-md-12 col-xl-3">
+            <div className="col-sm-12 col-md-3 col-xl-3 slide-share-right-wrap">
 
               <div className="slide-share-right full-height">
 
