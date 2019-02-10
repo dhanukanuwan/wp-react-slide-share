@@ -524,3 +524,64 @@ h4 {
     }
   }
 }
+
+.img-zoom {
+  position: absolute;
+  top: 15px;
+  right: 11%;
+  width: 30px;
+  height: 30px !important;
+  background: $white;
+  border-radius: 50%;
+
+  @media only screen and (max-width : 1400px) {
+    right: 6%;
+    top: 20px;
+  }
+
+  @media (min-width: 768px) and (max-width: 1023px) {
+    right: 20px;
+  }
+
+  @media only screen and (max-width : 500px) {
+    right: 6%;
+  }
+
+  button {
+    background: $white;
+    border: 1px solid $black;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    -webkit-text-stroke: 1px $white;
+    font-size: 12px;
+    padding: 0;
+    margin-left: 5px;
+    margin-top: 5px;
+    cursor: pointer;
+
+    &:focus {
+      outline: none;
+    }
+  }
+}
+
+.zoom-model {
+  .modal-body {
+    padding: 3px;
+    position: relative;
+    border-radius: 0;
+
+    button {
+      position: absolute;
+      color: $white;
+      top: 10px;
+      right: 15px;
+      text-shadow: none;
+
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+}

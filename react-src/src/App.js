@@ -257,6 +257,7 @@ class SocialModels extends Component {
             </div>
           </div>
         </div>
+
       </div>
 
     );
@@ -343,6 +344,7 @@ class App extends Component {
       const displayedImageID = $('body').find( '.swiper-slide-active' ).find( 'img' ).attr( 'thumbid' );
       const prevImageID = $('body').find( '.swiper-slide-prev' ).find( 'img' ).attr( 'thumbid' );
       const displayedImageAlt = $('body').find( '.swiper-slide-active' ).find( 'img' ).attr( 'alt' );
+      const displayedImageUrl = $('body').find( '.swiper-slide-active' ).find( 'img' ).attr( 'original' );
 
       const displayedImage = $( 'body' ).find( '.slide-share-middle' ).find( '#image' + displayedImageID );
       const prevImage = $( 'body' ).find( '.slide-share-middle' ).find( '#image' + prevImageID );
@@ -358,7 +360,8 @@ class App extends Component {
 
       this.setState({
         currentSlide: nextNumber,
-        bigImgageAlt: displayedImageAlt
+        bigImgageAlt: displayedImageAlt,
+        bigImageUrl: displayedImageUrl
       });
 
     }, 100);
@@ -381,6 +384,7 @@ class App extends Component {
       const displayedImageID = $('body').find( '.swiper-slide-active' ).find( 'img' ).attr( 'thumbid' );
       const nextImageID = $('body').find( '.swiper-slide-next' ).find( 'img' ).attr( 'thumbid' );
       const displayedImageAlt = $('body').find( '.swiper-slide-active' ).find( 'img' ).attr( 'alt' );
+      const displayedImageUrl = $('body').find( '.swiper-slide-active' ).find( 'img' ).attr( 'original' );
 
       const displayedImage = $( 'body' ).find( '.slide-share-middle' ).find( '#image' + displayedImageID );
       const nextImage = $( 'body' ).find( '.slide-share-middle' ).find( '#image' + nextImageID );
@@ -395,7 +399,8 @@ class App extends Component {
 
       this.setState({
         currentSlide: prevNumber,
-        bigImgageAlt: displayedImageAlt
+        bigImgageAlt: displayedImageAlt,
+        bigImageUrl: displayedImageUrl
       });
 
     }, 100);
@@ -464,6 +469,12 @@ class App extends Component {
                   {this.state.imageList.map( ( image , i ) => <img id={'image' + image.id} src={image.guid.rendered} alt={this.state.bigImgageAlt} key={i} /> )}
                 </Swipe>
 
+                <div className="img-zoom">
+                  <button type="button" data-toggle="modal" data-target="#zoomContainer" >
+                    <i className="fa fa-plus" aria-hidden="true"></i>
+                  </button>
+                </div>
+
               </div>
             </div>
 
@@ -508,6 +519,18 @@ class App extends Component {
         </div>
 
         <SocialModels />
+        <div className="modal fade social-models-wrap zoom-model " id="zoomContainer" >
+          <div className="modal-dialog modal-dialog-centered modal-xl" role="document">
+            <div className="modal-content">
+              <div className="modal-body social-models">
+                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+                <img src={this.state.bigImageUrl} alt={this.state.bigImgageAlt} />
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
