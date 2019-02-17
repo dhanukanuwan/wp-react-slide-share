@@ -345,16 +345,21 @@ class App extends Component {
       const prevImageID = $('body').find( '.swiper-slide-prev' ).find( 'img' ).attr( 'thumbid' );
       const displayedImageAlt = $('body').find( '.swiper-slide-active' ).find( 'img' ).attr( 'alt' );
       const displayedImageUrl = $('body').find( '.swiper-slide-active' ).find( 'img' ).attr( 'original' );
+      const loadingIcon = $('body').find( '.spinner-border' );
 
       const displayedImage = $( 'body' ).find( '.slide-share-middle' ).find( '#image' + displayedImageID );
       const prevImage = $( 'body' ).find( '.slide-share-middle' ).find( '#image' + prevImageID );
 
       if ( displayedImage.length > 0 ) {
-        displayedImage.removeClass('fadeOutLeft fadeInRight fadeOutRight fadeInLeft faster animated').addClass('fadeInRight animated faster');
+        displayedImage.removeClass('fadeOutLeft fadeInRight fadeOutRight fadeInLeft animated').addClass('fadeInRight animated');
       }
 
       if ( prevImage.length > 0 ) {
-        prevImage.removeClass('fadeOutLeft fadeInRight fadeOutRight fadeInLeft faster animated').addClass('fadeOutLeft animated faster');
+        prevImage.removeClass('fadeOutLeft fadeInRight fadeOutRight fadeInLeft animated').addClass('fadeOutLeft animated');
+      }
+
+      if ( loadingIcon.length > 0 ) {
+        loadingIcon.remove();
       }
 
 
@@ -390,11 +395,11 @@ class App extends Component {
       const nextImage = $( 'body' ).find( '.slide-share-middle' ).find( '#image' + nextImageID );
 
       if ( displayedImage.length > 0 ) {
-        displayedImage.removeClass('fadeOutLeft fadeInRight fadeOutRight fadeInLeft faster animated').addClass('fadeInLeft animated faster');
+        displayedImage.removeClass('fadeOutLeft fadeInRight fadeOutRight fadeInLeft animated').addClass('fadeInLeft animated');
       }
 
       if ( nextImage.length > 0 ) {
-        nextImage.removeClass('fadeOutLeft fadeInRight fadeOutRight fadeInLeft faster animated').addClass('fadeOutRight animated faster');
+        nextImage.removeClass('fadeOutLeft fadeInRight fadeOutRight fadeInLeft animated').addClass('fadeOutRight animated');
       }
 
       this.setState({
@@ -467,6 +472,9 @@ class App extends Component {
               <div className="slide-share-middle full-height" style={{height: ( $(window).height() - 170 ) }}>
                 <Swipe onSwipeRight={this.triggerPrewSlide} onSwipeLeft={this.triggerNextSlide}>
                   {this.state.imageList.map( ( image , i ) => <img id={'image' + image.id} src={image.guid.rendered} alt={this.state.bigImgageAlt} key={i} /> )}
+                  <div className="spinner-border" role="status">
+                    <span className="sr-only">Loading...</span>
+                  </div>
                 </Swipe>
 
                 <div className="img-zoom">
