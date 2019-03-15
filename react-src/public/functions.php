@@ -128,4 +128,79 @@ function trigger_lookbook_share() {
 add_action( 'wp_ajax_trigger_lookbook_share', 'trigger_lookbook_share' );
 add_action( 'wp_ajax_nopriv_trigger_lookbook_share', 'trigger_lookbook_share' );
 
+function copy_images_to_slides() {
+
+	$images_loop = new WP_Query( ['post_type' => 'attachment', 'posts_per_page' => -1, 'post_status' => 'inherit', 'post_mime_type' => 'image'] );
+
+	if( $images_loop->have_posts() ) : while( $images_loop->have_posts() ) : $images_loop->the_post();
+
+	$slide_title = get_page_by_title( get_the_title(), OBJECT, 'slides' );
+
+	if ( empty( $slide_title ) ) {
+		$new_slide_id = wp_insert_post( [
+			'post_title'	=> get_the_title(),
+			'post_content'	=> '',
+			'post_status'   => 'publish',
+			'post_type'	=> 'slides'
+		] );
+
+		set_post_thumbnail( $new_slide_id, get_the_ID() );
+	}
+
+	endwhile; wp_reset_postdata(); endif;
+
+}
+
+add_action( 'init', 'copy_images_to_slides' );
+
+add_action('rest_api_init', 'register_rest_images' );
+function register_rest_images(){
+    register_rest_field( array('slides'),
+        'fimg_url',
+        array(
+            'get_callback'    => 'get_rest_featured_image',
+            'update_callback' => null,
+            'schema'          => null,
+        )
+    );
+
+		register_rest_field( array('slides'),
+        'thumb_url',
+        array(
+            'get_callback'    => 'get_rest_featured_thumb_image',
+            'update_callback' => null,
+            'schema'          => null,
+        )
+    );
+}
+function get_rest_featured_image( $object, $field_name, $request ) {
+
+	$return_url = null;
+
+	if ( wp_is_mobile() ) {
+		$mobile_img = get_field( 'mobile_image', $object['id'] );
+
+		if ( ! empty( $mobile_img ) ) {
+			$return_url = $mobile_img;
+		}
+
+	}
+
+    if( isset( $object['featured_media'] ) && empty( $return_url ) ) {
+        $img = wp_get_attachment_image_src( $object['featured_media'], 'original' );
+				$return_url = $img[0];
+    }
+
+    return $return_url;
+}
+
+function get_rest_featured_thumb_image( $object, $field_name, $request ) {
+    if( $object['featured_media'] ){
+        $img = wp_get_attachment_image_src( $object['featured_media'], 'slide_thumb' );
+        return $img[0];
+    }
+    return false;
+}
+
+
 ?>

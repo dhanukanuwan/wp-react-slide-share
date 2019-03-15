@@ -39,7 +39,7 @@ class SingleThumb extends Component {
 
     return (
       <div className="swiper-slide">
-        <img thumbid={imageData.id} src={imageData.media_details.sizes.slide_thumb.source_url} onClick={this.handleClick} alt={imageData.title.rendered} original={imageData.guid.rendered} />
+        <img thumbid={imageData.id} src={imageData.thumb_url} onClick={this.handleClick} alt={imageData.title.rendered} original={imageData.fimg_url} />
       </div>
     );
 
@@ -286,9 +286,9 @@ class App extends Component {
 
   componentDidMount() {
 
-    fetch( window.location.origin + '/wp-json/wp/v2/media/?per_page=100')
+    fetch( window.location.origin + '/wp-json/wp/v2/slides/?per_page=100' )
       .then(response => response.json())
-      .then(data => this.setState({ imageList: data, bigImageUrl: data[0].guid.rendered, bigImgageAlt: data[0].title.rendered }));
+      .then(data => this.setState({ imageList: data, bigImageUrl: data[0].fimg_url, bigImgageAlt: data[0].title.rendered }));
 
     fetch( window.location.origin + '/wp-json/acf/v3/pages')
       .then(response => response.json())
@@ -471,7 +471,7 @@ class App extends Component {
             <div className="col-sm-12 col-md-6 col-xl-6 slide-share-middle-wrap">
               <div className="slide-share-middle full-height" style={{height: ( $(window).height() - 178 ) }}>
                 <Swipe onSwipeRight={this.triggerPrewSlide} onSwipeLeft={this.triggerNextSlide}>
-                  {this.state.imageList.map( ( image , i ) => <img id={'image' + image.id} src={image.guid.rendered} alt={this.state.bigImgageAlt} key={i} /> )}
+                  {this.state.imageList.map( ( image , i ) => <img id={'image' + image.id} src={image.fimg_url} alt={image.title.rendered} key={i} /> )}
                   <div className="spinner-border" role="status">
                     <span className="sr-only">Loading...</span>
                   </div>
