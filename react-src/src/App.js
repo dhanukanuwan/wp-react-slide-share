@@ -40,7 +40,8 @@ class SingleThumb extends Component {
 
     return (
       <div className="swiper-slide">
-        <img thumbid={imageData.id} src={imageData.thumb_url} onClick={this.handleClick} alt={imageData.title.rendered} original={imageData.fimg_url} />
+        <img thumbid={imageData.id} className="swiper-lazy" data-src={imageData.thumb_url} onClick={this.handleClick} alt={imageData.title.rendered} original={imageData.fimg_url} />
+        <div className="swiper-lazy-preloader"></div>
       </div>
     );
 
@@ -310,8 +311,15 @@ class App extends Component {
       thumbSwiper = new Swiper( '.thumbs-wrap', {
           direction: 'vertical',
           slidesPerView: 1,
-          height: 160
+          height: 160,
+          preloadImages: false,
+          lazy: {
+            loadPrevNext: true,
+            loadPrevNextAmount: 4
+          }
       });
+
+      setTimeout(() => { window.dispatchEvent(new Event('resize')) }, 200);
 
       this.setState({
         isSliderActive: true,
