@@ -13,6 +13,7 @@
         "react-color-extractor": "^1.1.2",
         "react-dom": "^16.7.0",
         "react-easy-swipe": "0.0.17",
+        "react-lazy-load": "^3.0.13",
         "swiper": "^4.4.6"
     },
     "scripts": {

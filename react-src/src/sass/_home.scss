@@ -171,16 +171,23 @@ h4 {
     }
   }
 
-  img {
+  .layzyload-wrap {
     height: 100%;
-    display: block;
-    margin: 0 auto;
     position: absolute;
     right: -100%;
-    left: -100%;
     opacity: 0;
     animation-duration: 800ms;
     z-index: 2;
+
+    .LazyLoad,
+    img {
+      height: 100%;
+    }
+
+    img {
+      display: block;
+      margin: 0 auto;
+    }
 
     &:first-child,
     &.fadeInRight.animated,
@@ -188,8 +195,6 @@ h4 {
       left: 0;
       right: 0;
       opacity: 1;
-      left: -9999px;
-      right: -9999px;
       margin: auto;
     }
 

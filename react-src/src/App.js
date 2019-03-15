@@ -6,6 +6,7 @@ import Swiper from 'swiper';
 import $ from 'jquery';
 import Swipe from 'react-easy-swipe';
 import 'bootstrap';
+import LazyLoad from 'react-lazy-load';
 
 class SingleThumb extends Component {
 
@@ -471,7 +472,7 @@ class App extends Component {
             <div className="col-sm-12 col-md-6 col-xl-6 slide-share-middle-wrap">
               <div className="slide-share-middle full-height" style={{height: ( $(window).height() - 178 ) }}>
                 <Swipe onSwipeRight={this.triggerPrewSlide} onSwipeLeft={this.triggerNextSlide}>
-                  {this.state.imageList.map( ( image , i ) => <img id={'image' + image.id} src={image.fimg_url} alt={image.title.rendered} key={i} /> )}
+                  {this.state.imageList.map( ( image , i ) => <div id={'image' + image.id} className="layzyload-wrap" key={i}><LazyLoad offsetHorizontal={100} ><img src={image.fimg_url} alt={image.title.rendered}  /></LazyLoad></div> )}
                   <div className="spinner-border" role="status">
                     <span className="sr-only">Loading...</span>
                   </div>
