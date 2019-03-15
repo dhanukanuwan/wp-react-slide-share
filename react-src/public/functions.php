@@ -151,7 +151,7 @@ function copy_images_to_slides() {
 
 }
 
-add_action( 'init', 'copy_images_to_slides' );
+//add_action( 'init', 'copy_images_to_slides' );
 
 add_action('rest_api_init', 'register_rest_images' );
 function register_rest_images(){
