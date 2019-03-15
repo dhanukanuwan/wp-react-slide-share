@@ -302,8 +302,6 @@ class App extends Component {
         copyrightText: data[0].acf.copyright_text
       }));
 
-    setTimeout(() => { window.dispatchEvent(new Event('resize')) }, 100);
-
     let thumbSwiper = null;
 
     if ( this.state.isSliderActive === false ) {
@@ -319,7 +317,7 @@ class App extends Component {
           }
       });
 
-      setTimeout(() => { window.dispatchEvent(new Event('resize')) }, 200);
+      setTimeout(() => { window.dispatchEvent(new Event('resize')) }, 500);
 
       this.setState({
         isSliderActive: true,

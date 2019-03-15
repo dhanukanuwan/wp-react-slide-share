@@ -141,12 +141,20 @@ h4 {
       -o-transition: all 0.3s ease;
       -ms-transition: all 0.3s ease;
       transition: all 0.3s ease;
+
+      &.swiper-lazy {
+        opacity: 0;
+
+        &.swiper-lazy-loaded {
+          opacity: 1;
+        }
+      }
     }
   }
 
   .swiper-slide-active {
     img {
-      opacity: 0.5;
+      opacity: 0.5 !important;
     }
   }
 }
