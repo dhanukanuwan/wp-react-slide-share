@@ -17,31 +17,19 @@ class SingleThumb extends Component {
       clickedItemAlt: ""
     }
   }
-
-  handleClick = (e) => {
-
-    const clickedSrc = e.target.getAttribute("original");
-    const clickedAlt = e.target.getAttribute("alt");
-
-    const clickedData = [clickedSrc, clickedAlt];
-
-    this.setState({
-      clickedItemSrc: clickedSrc,
-      clickedItemAlt: clickedAlt
-    })
-
-    this.props.clickedDataHandler( clickedData );
-
-  }
-
   render() {
 
     const imageData = this.props.imageData;
+    const windowWidth = parseInt( $( window ).width(), 10 );
+    let imgOutput = '';
+
+    if ( windowWidth > 1023 ) {
+      imgOutput = <img className="swiper-lazy" data-src={imageData.thumb_url} alt={imageData.title.rendered}  />;
+    }
 
     return (
-      <div className="swiper-slide">
-        <img thumbid={imageData.id} className="swiper-lazy" data-src={imageData.thumb_url} onClick={this.handleClick} alt={imageData.title.rendered} original={imageData.fimg_url} />
-        <div className="swiper-lazy-preloader"></div>
+      <div className="swiper-slide" thumbid={imageData.id} original={imageData.fimg_url} alt={imageData.title.rendered}>
+        { imgOutput }
       </div>
     );
 
@@ -348,10 +336,10 @@ class App extends Component {
 
       window.dispatchEvent(new Event('resize'));
 
-      const displayedImageID = $('body').find( '.swiper-slide-active' ).find( 'img' ).attr( 'thumbid' );
-      const prevImageID = $('body').find( '.swiper-slide-prev' ).find( 'img' ).attr( 'thumbid' );
-      const displayedImageAlt = $('body').find( '.swiper-slide-active' ).find( 'img' ).attr( 'alt' );
-      const displayedImageUrl = $('body').find( '.swiper-slide-active' ).find( 'img' ).attr( 'original' );
+      const displayedImageID = $('body').find( '.swiper-slide-active' ).attr( 'thumbid' );
+      const prevImageID = $('body').find( '.swiper-slide-prev' ).attr( 'thumbid' );
+      const displayedImageAlt = $('body').find( '.swiper-slide-active' ).attr( 'alt' );
+      const displayedImageUrl = $('body').find( '.swiper-slide-active' ).attr( 'original' );
       const loadingIcon = $('body').find( '.spinner-border' );
 
       const displayedImage = $( 'body' ).find( '.slide-share-middle' ).find( '#image' + displayedImageID );
@@ -393,10 +381,10 @@ class App extends Component {
 
       window.dispatchEvent(new Event('resize'));
 
-      const displayedImageID = $('body').find( '.swiper-slide-active' ).find( 'img' ).attr( 'thumbid' );
-      const nextImageID = $('body').find( '.swiper-slide-next' ).find( 'img' ).attr( 'thumbid' );
-      const displayedImageAlt = $('body').find( '.swiper-slide-active' ).find( 'img' ).attr( 'alt' );
-      const displayedImageUrl = $('body').find( '.swiper-slide-active' ).find( 'img' ).attr( 'original' );
+      const displayedImageID = $('body').find( '.swiper-slide-active' ).attr( 'thumbid' );
+      const nextImageID = $('body').find( '.swiper-slide-next' ).attr( 'thumbid' );
+      const displayedImageAlt = $('body').find( '.swiper-slide-active' ).attr( 'alt' );
+      const displayedImageUrl = $('body').find( '.swiper-slide-active' ).attr( 'original' );
 
       const displayedImage = $( 'body' ).find( '.slide-share-middle' ).find( '#image' + displayedImageID );
       const nextImage = $( 'body' ).find( '.slide-share-middle' ).find( '#image' + nextImageID );
