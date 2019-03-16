@@ -28,7 +28,7 @@ class SingleThumb extends Component {
     }
 
     return (
-      <div className="swiper-slide" thumbid={imageData.id} original={imageData.fimg_url} alt={imageData.title.rendered}>
+      <div className="swiper-slide" thumbid={imageData.id} original={imageData.fimg_url} alt={imageData.title.rendered} highres={imageData.highres_url}>
         { imgOutput }
       </div>
     );
@@ -278,7 +278,7 @@ class App extends Component {
 
     fetch( window.location.origin + '/wp-json/wp/v2/slides/?per_page=100' )
       .then(response => response.json())
-      .then(data => this.setState({ imageList: data, bigImageUrl: data[0].fimg_url, bigImgageAlt: data[0].title.rendered }));
+      .then(data => this.setState({ imageList: data, bigImageUrl: data[0].highres_url, bigImgageAlt: data[0].title.rendered }));
 
     fetch( window.location.origin + '/wp-json/acf/v3/pages')
       .then(response => response.json())
@@ -342,6 +342,8 @@ class App extends Component {
       const displayedImageUrl = $('body').find( '.swiper-slide-active' ).attr( 'original' );
       const loadingIcon = $('body').find( '.spinner-border' );
 
+      const highresUrl = $('body').find( '.swiper-slide-active' ).attr( 'highres' );
+
       const displayedImage = $( 'body' ).find( '.slide-share-middle' ).find( '#image' + displayedImageID );
       const prevImage = $( 'body' ).find( '.slide-share-middle' ).find( '#image' + prevImageID );
 
@@ -361,7 +363,7 @@ class App extends Component {
       this.setState({
         currentSlide: nextNumber,
         bigImgageAlt: displayedImageAlt,
-        bigImageUrl: displayedImageUrl
+        bigImageUrl: highresUrl
       });
 
     }, 100);
@@ -386,6 +388,8 @@ class App extends Component {
       const displayedImageAlt = $('body').find( '.swiper-slide-active' ).attr( 'alt' );
       const displayedImageUrl = $('body').find( '.swiper-slide-active' ).attr( 'original' );
 
+      const highresUrl = $('body').find( '.swiper-slide-active' ).attr( 'highres' );
+
       const displayedImage = $( 'body' ).find( '.slide-share-middle' ).find( '#image' + displayedImageID );
       const nextImage = $( 'body' ).find( '.slide-share-middle' ).find( '#image' + nextImageID );
 
@@ -400,7 +404,7 @@ class App extends Component {
       this.setState({
         currentSlide: prevNumber,
         bigImgageAlt: displayedImageAlt,
-        bigImageUrl: displayedImageUrl
+        bigImageUrl: highresUrl
       });
 
     }, 100);

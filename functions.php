@@ -98,8 +98,7 @@ add_action( 'widgets_init', 'meyer_widgets_init' );
 
 function meyer_themes_scripts() {
 	wp_enqueue_style( 'meyer-fontawesome', get_stylesheet_directory_uri() . '/css/font-awesome.min.css' );
-	wp_enqueue_style( 'meyer-g-font', 'https://fonts.googleapis.com/css?family=Montserrat:400,500,700' );
-	wp_enqueue_style( 'meyer-animate-css', 'https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css' );
+	wp_enqueue_style( 'meyer-animate-css', get_stylesheet_directory_uri() .'/css/animate.min.css' );
 
 	//wp_enqueue_script( 'meyer-swiper', get_stylesheet_directory_uri() . '/js/swiper.min.js', ['jquery'], '4.5.0', false );
 
@@ -175,6 +174,15 @@ function register_rest_images(){
             'schema'          => null,
         )
     );
+
+		register_rest_field( array('slides'),
+        'highres_url',
+        array(
+            'get_callback'    => 'get_highres_image',
+            'update_callback' => null,
+            'schema'          => null,
+        )
+    );
 }
 function get_rest_featured_image( $object, $field_name, $request ) {
 
@@ -203,6 +211,24 @@ function get_rest_featured_thumb_image( $object, $field_name, $request ) {
         return $img[0];
     }
     return false;
+}
+
+function get_highres_image( $object, $field_name, $request ) {
+
+	$return_url = null;
+
+	$highres_img = get_field( 'high_resolution_image', $object['id'] );
+
+	if ( ! empty( $highres_img ) ) {
+		$return_url = $highres_img;
+	}
+
+  if( isset( $object['featured_media'] ) && empty( $return_url ) ) {
+      $img = wp_get_attachment_image_src( $object['featured_media'], 'original' );
+			$return_url = $img[0];
+  }
+
+    return $return_url;
 }
 
 
