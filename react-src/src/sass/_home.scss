@@ -185,10 +185,14 @@ h4 {
     right: -100%;
     opacity: 0;
     animation-duration: 800ms;
+    -webkit-animation-duration: 800ms;
     z-index: 2;
 
     @media only screen and (max-width : 1023px) {
       animation-duration: 1000ms;
+      -webkit-animation-duration: 1000ms;
+      -ms-animation-duration: 1000ms;
+      -moz-animation-duration: 1000ms;
     }
 
     .LazyLoad,

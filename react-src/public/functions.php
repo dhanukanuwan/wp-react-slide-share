@@ -100,6 +100,9 @@ function meyer_themes_scripts() {
 	wp_enqueue_style( 'meyer-fontawesome', get_stylesheet_directory_uri() . '/css/font-awesome.min.css' );
 	wp_enqueue_style( 'meyer-g-font', 'https://fonts.googleapis.com/css?family=Montserrat:400,500,700' );
 	wp_enqueue_style( 'meyer-animate-css', 'https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css' );
+
+	//wp_enqueue_script( 'meyer-swiper', get_stylesheet_directory_uri() . '/js/swiper.min.js', ['jquery'], '4.5.0', false );
+
 }
 add_action( 'wp_enqueue_scripts', 'meyer_themes_scripts' );
 
